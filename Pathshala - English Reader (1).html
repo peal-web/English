@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pathshala - English Reader</title>
+<style>
+:root{--bg:#faf8f4;--card:#fff;--tx:#1f2430;--mu:#6b7280;--ac:#2f6f5e;--ac2:#e8f2ee;--bd:#e5e1d8;--bn:#fff6e0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--card:#1e2229;--tx:#e8e6e1;--mu:#9aa1ac;--ac:#6fc3a9;--ac2:#20312c;--bd:#2f353f;--bn:#2b2718}}
+:root[data-theme="dark"]{--bg:#15181d;--card:#1e2229;--tx:#e8e6e1;--mu:#9aa1ac;--ac:#6fc3a9;--ac2:#20312c;--bd:#2f353f;--bn:#2b2718}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif;line-height:1.6}
+main{max-width:720px;margin:0 auto;padding:12px 16px 160px}
+h1{font-size:21px;margin:4px 0 8px}h2{font-size:19px;margin:0 0 2px}h3{font-size:16px;margin:14px 0 4px;color:var(--ac)}
+.sub{color:var(--mu);font-size:14px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+textarea{width:100%;min-height:130px;border:1px solid var(--bd);border-radius:10px;padding:10px;font:inherit;background:var(--bg);color:var(--tx);resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+button,.btn{border:1px solid var(--ac);background:var(--ac);color:#fff;border-radius:10px;padding:9px 13px;font:inherit;font-size:15px;cursor:pointer}
+button.ghost,.btn.ghost{background:transparent;color:var(--ac)}
+button:disabled{opacity:.5}
+input[type=file]{display:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{padding:7px 10px;font-size:14px;background:transparent;color:var(--ac)}
+.tabs button.act{background:var(--ac);color:#fff}
+.status{font-size:14px;color:var(--mu);margin-top:8px;min-height:20px}
+.chunk{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.en{font-family:Georgia,"Times New Roman",serif;font-size:19px;white-space:pre-wrap}
+.w{cursor:pointer;border-radius:4px;padding:0 1px}
+.w:hover,.w.on{background:var(--ac2);color:var(--ac)}
+.bn{margin-top:10px;background:var(--bn);border-radius:10px;padding:10px 12px;font-size:17px;white-space:pre-wrap}
+.bar{height:6px;background:var(--bd);border-radius:4px;margin:6px 0 12px}.bar i{display:block;height:100%;background:var(--ac);border-radius:4px;width:0;transition:width .3s}
+.pr{font-size:15px;font-weight:600;color:var(--ac)}
+#pop{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:2px solid var(--ac);display:none;z-index:5}
+#pop .in{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+#pop b{font-size:20px}#pop .m{font-size:18px;margin-top:4px}
+.x{background:transparent!important;color:var(--mu)!important;border:none!important;font-size:22px;padding:0 6px!important}
+.tag{display:inline-block;background:var(--ac2);color:var(--ac);border-radius:6px;padding:0 7px;margin:2px 3px 2px 0;font-size:14px}
+.ex{font-size:15px;margin:4px 0}.ex i{color:var(--mu)}
+p.t{white-space:pre-wrap;margin:4px 0}
+.ic{width:18px;height:18px;vertical-align:-4px;margin-right:5px}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px}
+.tabs .ic{margin:0;width:21px;height:21px}
+button .ic{margin-right:4px}
+#spk .ic,.card .row .ic{margin:0 2px 0 0}
+:root{--bg:#f3f4ff;--card:#fff;--tx:#1b1d3a;--mu:#666c92;--ac:#4338ca;--ac2:#e6e8ff;--bd:#d5d8f7;--bn:#fff3c4;--yl:#ffc933}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101126;--card:#1b1d3c;--tx:#ecedff;--mu:#9da2cc;--ac:#8a92ff;--ac2:#2a2d5e;--bd:#34376e;--bn:#3b3516}}
+:root[data-theme="dark"]{--bg:#101126;--card:#1b1d3c;--tx:#ecedff;--mu:#9da2cc;--ac:#8a92ff;--ac2:#2a2d5e;--bd:#34376e;--bn:#3b3516}
+.brand{display:flex;align-items:center;gap:10px;margin:2px 0 14px}
+.logo{width:44px;height:44px;border-radius:13px;background:var(--yl);color:#1b1d3a;font-weight:800;font-size:21px;display:flex;align-items:center;justify-content:center;border:2px solid var(--ac)}
+.bt{font-size:22px;font-weight:800;color:var(--ac);line-height:1.1}.bs{font-size:11px;color:var(--mu);letter-spacing:.1em;text-transform:uppercase}
+.card,.chunk{border:2px solid var(--bd);border-radius:16px}
+textarea{border:2px solid var(--bd);border-radius:12px}
+button,.btn{border-width:2px;border-radius:12px;font-weight:600}
+.bn{border-left:5px solid var(--yl);background:var(--bn)}
+.w:hover,.w.on{background:var(--yl);color:#1b1d3a}
+.bar{height:10px;background:var(--ac2);border-radius:6px}.bar i{background:var(--yl)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:4;margin:0;gap:0;flex-wrap:nowrap;background:var(--card);border-top:2px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs button{flex:1;min-width:0;padding:9px 0;font-size:11.5px;border:none;border-radius:10px;color:var(--mu);background:transparent;white-space:nowrap}
+.tabs button.act{background:var(--ac2);color:var(--ac)}
+#pop{border-top:3px solid var(--yl);z-index:6}
+</style>
+</head>
+<body>
+<main>
+<div class="brand"><div class="logo">Aa</div><div><div class="bt">Pathshala</div><div class="bs">English Reader</div></div></div>
+<div class="tabs">
+ <button id="t-home" class="act">New</button><button id="t-read">Read</button><button id="t-lib">Library</button><button id="t-voc">Words</button><button id="t-sum">Summary</button>
+</div>
+
+<section id="v-home">
+ <p class="sub">Add a poem, prose or novel text. The Bengali translation appears below each part. Tap any word for its meaning.</p>
+ <div class="card">
+  <textarea id="txt" placeholder="Paste English text here..."></textarea>
+  <div class="row">
+   <label class="btn ghost" for="pdf">Upload PDF</label><input type="file" id="pdf" accept="application/pdf">
+   <label class="btn ghost" for="img">Upload photo</label><input type="file" id="img" accept="image/*">
+   <button id="go">Start reading</button>
+  </div>
+  <div class="status" id="st"></div>
+ </div>
+</section>
+
+<section id="v-read" style="display:none">
+ <h2 id="rt"></h2><div class="sub" id="rm"></div>
+ <div class="pr" id="pg"></div><div class="bar"><i id="bar"></i></div>
+ <div class="row" style="margin:0 0 12px"><button class="ghost" id="save">Save text</button><button class="ghost" id="sumb">Summary</button></div>
+ <div id="chunks"></div>
+ <button id="next">Next part</button>
+</section>
+
+<section id="v-lib" style="display:none"></section>
+<section id="v-voc" style="display:none"></section>
+<section id="v-sum" style="display:none"></section>
+</main>
+
+<div id="pop"><div class="in"><div><b id="pw"></b> <button id="spk" class="ghost" style="padding:2px 10px"></button> <button id="svw" class="ghost" style="padding:2px 10px">Save word</button> <span id="pp" style="color:var(--mu);font-size:14px"></span><div class="m" id="pm"></div><div id="pn" style="font-size:13px;color:var(--mu)"></div></div><button class="x" id="px">×</button></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(function(){
+const $=i=>document.getElementById(i);
+const h=(t,c,x,p)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e};
+const L=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}};
+const S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){alert('Could not save (storage is full or blocked).');return false}};
+let sample=null,cur=null,chunks=[],shown=0,wc={},pk='',pctx='';
+const say=t=>{$('st').textContent=t||''};
+(window.claude?claude.use("sample"):Promise.resolve(null)).then(s=>{sample=s;if(!s)say('Translation is unavailable (Claude permission needed).')}).catch(()=>say('Could not start translation.'));
+
+const I={plus:'<path d="M12 5v14M5 12h14"/>',book:'<path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/>',lib:'<rect x="4" y="4" width="4" height="16" rx="1"/><rect x="10" y="4" width="4" height="16" rx="1"/><path d="M16 6l4 1-3 13-4-1z"/>',star:'<path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z"/>',doc:'<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/>',spk:'<path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'};
+const ico=n=>'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+I[n]+'</svg>';
+const V=['home','read','lib','voc','sum'];
+const TI={home:['plus','New'],read:['book','Read'],lib:['lib','Library'],voc:['star','Words'],sum:['doc','Summary']};
+V.forEach(n=>{$('t-'+n).innerHTML=ico(TI[n][0])+TI[n][1]});$('spk').innerHTML=ico('spk');
+function go(v){V.forEach(n=>{$('v-'+n).style.display=n===v?'block':'none';$('t-'+n).classList.toggle('act',n===v)});$('pop').style.display='none';if(v==='lib')renderLib();if(v==='voc')renderVoc();window.scrollTo(0,0)}
+$('t-home').onclick=()=>go('home');
+$('t-read').onclick=()=>go(cur?'read':'home');
+$('t-lib').onclick=()=>go('lib');$('t-voc').onclick=()=>go('voc');
+$('t-sum').onclick=showSum;$('sumb').onclick=showSum;
+
+function persist(c){if(!c||!c.id)return;const l=L('er_lib'),i=l.findIndex(x=>x.id===c.id);if(i>=0){l[i]=c;S('er_lib',l)}}
+
+function split(text){
+  const parts=text.replace(/\r/g,'').split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean),out=[];
+  parts.forEach(p=>{
+    if(p.length<=500){out.push(p);return}
+    const ss=p.match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g)||[p];let c='';
+    ss.forEach(s=>{if((c+s).length>450&&c){out.push(c.trim());c=''}c+=s});
+    if(c.trim())out.push(c.trim());
+  });
+  return out;
+}
+
+function start(c){
+  cur=c;chunks=split(c.text);$('chunks').innerHTML='';
+  shown=c.pos>0?Math.min(c.pos,chunks.length)-1:0;
+  $('rt').textContent=c.title||'New text';$('rm').textContent=[c.author,c.type].filter(Boolean).join(' · ');
+  $('save').textContent=c.id?'Saved':'Save text';
+  $('next').style.display='';go('read');addChunk(shown++);
+}
+
+function progress(){
+  $('pg').textContent='Part '+shown+' of '+chunks.length;
+  $('bar').style.width=(shown/chunks.length*100)+'%';
+  if(cur){cur.pos=shown;persist(cur)}
+  if(shown>=chunks.length)$('next').style.display='none';
+}
+
+function addChunk(i){
+  const c=cur,box=h('div','chunk'),en=h('div','en',null,box);
+  chunks[i].split(/(\s+)/).forEach(tok=>{
+    if(!tok||/^\s+$/.test(tok)){en.appendChild(document.createTextNode(tok||''));return}
+    const sp=h('span','w',tok,en);sp.onclick=()=>lookup(sp,tok,chunks[i]);
+  });
+  const bn=h('div','bn','Translating…',box);$('chunks').appendChild(box);progress();
+  if(c.tr[i]){bn.textContent=c.tr[i];return}
+  if(!sample){bn.textContent='Translation unavailable.';return}
+  sample('You are a literary translator from English to Bengali (বাংলা). First decide if the text is a POEM/verse or PROSE (story, novel, essay). Translate in the SAME STYLE as the original. If POEM: write it as Bengali poetry (কবিতা) with the same number of lines and line breaks, poetic diction, rhythm, imagery and mood; use rhyme only where it comes naturally; do not turn it into plain prose. If PROSE: write flowing literary Bengali prose in simple colloquial-friendly language keeping the narrator voice, tone, sentence rhythm and dialogue style. Stay faithful to meaning, do not add explanations. Output ONLY the Bengali translation.\n\n'+chunks[i],{modelTier:'default'})
+   .then(r=>{bn.textContent=r.text.trim();c.tr[i]=bn.textContent;persist(c)})
+   .catch(()=>{bn.textContent='Translation failed. Try again.'});
+}
+$('next').onclick=()=>{if(shown<chunks.length){addChunk(shown++);setTimeout(()=>{const k=$('chunks').lastChild;if(k)k.scrollIntoView({behavior:'smooth',block:'start'})},50)}};
+
+/* word popup */
+function speak(w){
+  const note=m=>{$('pn').textContent=m};
+  try{
+    const ss=window.speechSynthesis;
+    if(!ss||!window.SpeechSynthesisUtterance){note('Audio is not supported here. See the written pronunciation.');return}
+    if(ss.speaking||ss.pending)ss.cancel();
+    const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.85;
+    const vs=ss.getVoices(),v=vs.find(x=>/^en[-_]US/i.test(x.lang))||vs.find(x=>/^en/i.test(x.lang));
+    if(v)u.voice=v;
+    u.onerror=()=>note('No sound. Check that an English voice is installed in your phone Text-to-speech settings.');
+    if(ss.paused)ss.resume();
+    ss.speak(u);
+    setTimeout(()=>{if(!ss.speaking&&!ss.pending&&!ss.getVoices().length)note('No English voice found. See the written pronunciation.')},1500);
+  }catch(e){note('No sound.')}
+}
+try{speechSynthesis.getVoices()}catch(e){}
+$('spk').onclick=()=>speak($('pw').textContent);
+$('px').onclick=()=>{$('pop').style.display='none';document.querySelectorAll('.w.on').forEach(x=>x.classList.remove('on'))};
+function show(v){$('pp').textContent=v.pos?'('+v.pos+')':'';$('pm').textContent=(v.bn||'—')+(v.pr?'  ·  Sounds like: '+v.pr:'')}
+function lookup(sp,tok,ctx){
+  const w=tok.replace(/^[^A-Za-z']+|[^A-Za-z']+$/g,'').toLowerCase();if(!w)return;
+  document.querySelectorAll('.w.on').forEach(x=>x.classList.remove('on'));sp.classList.add('on');$('pn').textContent='';speak(w);
+  $('pw').textContent=w;$('pp').textContent='';$('pm').textContent='…';$('pop').style.display='block';
+  $('svw').textContent=L('er_voc').some(x=>x.w===w)?'Saved':'Save word';
+  pk=w+'|'+ctx.slice(0,60);pctx=ctx;
+  if(!sample){$('pm').textContent='Meaning unavailable';return}
+  if(wc[pk]){show(wc[pk]);return}
+  sample.json('English word: "'+w+'". Context sentence: "'+ctx.slice(0,400)+'". Give its Bengali meaning as used in this context. Reply ONLY JSON: {"bn":"বাংলা অর্থ (1-3 words, you may add a second common meaning)","pos":"noun/verb/adj/adv/etc","pr":"how an English speaker pronounces the word, written in Bengali letters"}',{modelTier:'quick'})
+   .then(v=>{wc[w+'|'+ctx.slice(0,60)]=v;if($('pw').textContent===w)show(v)})
+   .catch(()=>{$('pm').textContent='Could not load the meaning. Tap again.'});
+}
+$('svw').onclick=async()=>{
+  const w=$('pw').textContent,v=wc[pk],b=$('svw');
+  if(!v||!sample)return;
+  const vs=L('er_voc');if(vs.some(x=>x.w===w)){b.textContent='Saved';return}
+  b.textContent='Saving…';
+  try{
+    const d=await sample.json('English word "'+w+'" (Bengali meaning here: '+v.bn+'; sentence: "'+pctx.slice(0,300)+'"). Reply ONLY JSON: {"syn":["3-4 English synonyms"],"ant":["2-3 English antonyms, or [] if none"],"ex":[{"en":"simple example sentence using the word","bn":"বাংলা অনুবাদ"},{"en":"another example sentence","bn":"বাংলা অনুবাদ"}]}',{modelTier:'quick'});
+    vs.unshift({w:w,bn:v.bn,pos:v.pos,pr:v.pr,syn:d.syn||[],ant:d.ant||[],ex:d.ex||[],src:cur?cur.title:''});
+    if(S('er_voc',vs))b.textContent='Saved';else b.textContent='Save word';
+  }catch(e){b.textContent='Save word'}
+};
+
+/* save text */
+$('save').onclick=async()=>{
+  if(!cur||cur.id)return;const b=$('save'),c=cur;b.disabled=true;b.textContent='Saving…';
+  let m=c.sum||{};
+  if(!c.sum&&sample){try{m=await sample.json('Identify this English literary text if you recognize it (poem, prose, novel excerpt, essay). Reply ONLY JSON: {"title":"title (if unknown, a short descriptive title)","author":"author or empty","type":"poem/prose/novel/essay/story"}\n\n'+c.text.slice(0,1200),{modelTier:'quick'})}catch(e){}}
+  c.title=m.title||c.text.slice(0,40)+'…';c.author=m.author||'';c.type=m.type||'';
+  c.id=Date.now().toString(36);c.date=new Date().toISOString().slice(0,10);
+  const l=L('er_lib');l.unshift(c);S('er_lib',l);
+  $('rt').textContent=c.title;$('rm').textContent=[c.author,c.type].filter(Boolean).join(' · ');
+  b.disabled=false;b.textContent='Saved';
+};
+
+/* views */
+function renderLib(){
+  const b=$('v-lib');b.textContent='';const l=L('er_lib');
+  h('h2',null,'Saved texts',b);
+  if(!l.length){h('p','sub','Nothing saved yet. Tap "Save text" while reading.',b);return}
+  l.forEach(it=>{
+    const c=h('div','card',null,b);
+    h('b',null,it.title,c);h('div','sub',[it.author,it.type,it.date].filter(Boolean).join(' · ')+' · Last part: '+(it.pos||0),c);
+    const r=h('div','row',null,c);
+    const o=h('button',null,'Read',r);o.onclick=()=>start(it);
+    const d=h('button','ghost','',r);d.innerHTML=ico('trash')+'Delete';d.onclick=()=>{if(confirm('Delete this?')){S('er_lib',L('er_lib').filter(x=>x.id!==it.id));renderLib()}};
+  });
+}
+function renderVoc(){
+  const b=$('v-voc');b.textContent='';const vs=L('er_voc');
+  h('h2',null,'Saved words ('+vs.length+')',b);
+  if(!vs.length){h('p','sub','Tap a word while reading and press "Save word".',b);return}
+  vs.forEach(v=>{
+    const c=h('div','card',null,b),t=h('div',null,null,c);
+    h('b',null,v.w,t);const sp=h('button','ghost','',t);sp.innerHTML=ico('spk');sp.style.cssText='padding:1px 8px;margin:0 6px';sp.onclick=()=>speak(v.w);
+    h('span','sub',(v.pos?'('+v.pos+') ':'')+(v.pr?'Sounds like: '+v.pr:''),t);
+    h('div',null,v.bn,c).style.fontSize='18px';
+    if(v.syn&&v.syn.length){const s=h('div',null,'Synonym: ',c);v.syn.forEach(x=>h('span','tag',x,s))}
+    if(v.ant&&v.ant.length){const s=h('div',null,'Antonym: ',c);v.ant.forEach(x=>h('span','tag',x,s))}
+    (v.ex||[]).forEach(e=>{const p=h('div','ex',e.en,c);h('i',null,'  — '+(e.bn||''),p)});
+    if(v.src)h('div','sub','Source: '+v.src,c);
+    const d=h('button','ghost','',c);d.innerHTML=ico('trash');d.onclick=()=>{S('er_voc',L('er_voc').filter(x=>x.w!==v.w));renderVoc()};
+  });
+}
+async function showSum(){
+  go('sum');const b=$('v-sum');b.textContent='';
+  h('h2',null,'Summary and explanation',b);
+  if(!cur){h('p','sub','Start reading a text first.',b);return}
+  if(!sample){h('p','sub','This feature is unavailable.',b);return}
+  const c=cur;
+  if(!c.sum){
+    const w=h('p','sub','Claude is analysing the text…',b);
+    try{
+      c.sum=await sample.json('You are an English literature teacher. Analyse this text (poem/prose/novel excerpt). If you recognize the work, give its real title and author; if not, say so honestly (known:false) and do NOT invent an author. Reply ONLY JSON, all explanations in simple Bengali: {"known":true/false,"title":"title","author":"author or empty","type":"poem/prose/novel/essay/story","summary":"সারসংক্ষেপ in 5-8 Bengali lines","explanation":"ব্যাখ্যা in Bengali: central idea/theme, mood, meaning of key lines, literary devices (simile, metaphor etc.) with examples from the text","background":"লেখক ও প্রেক্ষাপট in 3-4 Bengali lines, only what you are confident about"}\n\n'+c.text.slice(0,6000),{modelTier:'default'});
+      if(!c.title)c.title=c.sum.title||'';if(!c.author)c.author=c.sum.author||'';if(!c.type)c.type=c.sum.type||'';
+      persist(c);
+      if(cur===c){$('rt').textContent=c.title||'New text';$('rm').textContent=[c.author,c.type].filter(Boolean).join(' · ')}
+    }catch(e){w.textContent='Analysis failed. Try again.';return}
+    w.remove();
+  }
+  const s=c.sum;
+  h('b',null,s.title||c.title||'',b);h('div','sub',[s.author,s.type].filter(Boolean).join(' · '),b);
+  [['Summary',s.summary],['Explanation',s.explanation],['Author and background',s.background]].forEach(x=>{if(x[1]){h('h3',null,x[0],b);h('p','t',x[1],b)}});
+  h('p','sub','Note: written from what Claude already knows, not a live web search. '+(s.known===false?'The text was not recognised, so the title is a guess. ':'')+'Check with your book or teacher before exams.',b);
+}
+
+/* input */
+$('go').onclick=()=>{
+  const t=$('txt').value.trim();if(!t){say('Add text, a PDF or a photo first.');return}
+  start({id:null,title:'',author:'',type:'',text:t,pos:0,tr:{},sum:null});
+};
+function ocr(bl){return sample('Extract all English text from these page images exactly as written, keeping paragraph/stanza breaks (blank line between). Output ONLY the text.',{images:bl,modelTier:'default'}).then(r=>r.text.trim())}
+$('img').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;if(!sample){say('Photo reading is unavailable.');return}
+  say('Reading text from the photo…');
+  ocr([f]).then(t=>{$('txt').value=t;say('Text extracted. Check it, then press "Start reading".')}).catch(()=>say('Could not read the photo. Try a clearer one.'));
+  e.target.value='';
+};
+$('pdf').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;say('Reading PDF…');
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  f.arrayBuffer().then(buf=>pdfjsLib.getDocument({data:buf}).promise).then(doc=>{
+    const n=Math.min(doc.numPages,40);let p=Promise.resolve(),text='';
+    for(let i=1;i<=n;i++){p=p.then(()=>doc.getPage(i)).then(pg=>pg.getTextContent()).then(c=>{
+      let line='',ly=null;c.items.forEach(it=>{const y=it.transform[5];if(ly!==null&&Math.abs(y-ly)>14)line+='\n';line+=it.str+' ';ly=y});text+=line.trim()+'\n\n'})}
+    return p.then(()=>{
+      if(text.replace(/\s/g,'').length>30){$('txt').value=text.trim();say('Text extracted from PDF ('+n+' pages). Press "Start reading".');return}
+      if(!sample){say('This is a scanned PDF and could not be read.');return}
+      say('Scanned PDF: reading the first 3 pages from images…');
+      const ps=[];for(let i=1;i<=Math.min(3,doc.numPages);i++){ps.push(doc.getPage(i).then(pg=>{
+        const vp=pg.getViewport({scale:1.5}),cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
+        return pg.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise.then(()=>new Promise(r=>cv.toBlob(r,'image/jpeg',.85)))}))}
+      return Promise.all(ps).then(ocr).then(t=>{$('txt').value=t;say('Text extracted. Press "Start reading".')});
+    });
+  }).catch(()=>say('Could not read the PDF. Try pasting the text.'));
+  e.target.value='';
+};
+})();
+</script>
+</body>
+</html>
